@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Converte Imagem pra Base64</title>
+		<style>
+			*{
+				margin: 0;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			.pagina{
+				width: 400px;
+				height: 300px;
+				margin: auto;
+				margin-top: 20px;
+				background-color: #e7e7e7;
+				padding: 8px;
+				box-shadow: 10px 10px 5px grey;
+			}
+			.titulo-form {
+				background-color: #666666;
+				color: white;
+				text-align: center;
+				padding: 10px;
+			}
+			.div-elementos{
+				margin-top: 10px;
+				border: 2px solid #666666;
+				padding: 3px;
+			}
+			textarea, input[type='file'], .btn-converter{
+				width: 100%;
+				padding: 5px;
+			}
+			textarea{
+				resize: none;
+			}
+			input[type='file']{
+				margin-left: -5px;
+			}
+			.btn-converter {
+				background-color: #dd5555;
+				color: white;
+			}
+			.btn-copiar{
+				padding: 0;
+				margin-bottom: 3px;
+				float: right;
+				background-color: #666666;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div class='pagina'>
+			<div class='titulo-form'>
+				<p>Converte IMG para Base64</p>
+			</div>
+			<form>
+				<div class='div-elementos'>
+					Arquivos (png, jpeg, bitmap, etc)
+					<input type='file' id='arquivo' onchange="Converter()"/>
+				</div>
+				<div class='div-elementos'>
+					<button type='button' class='btn-converter' onclick="Converter()">Converter</button>
+				</div>
+				<div class='div-elementos'>
+					Base64 <button type='button' class='btn-copiar' onclick="Copiar()">Copiar</button>
+					<textarea id='resBase64'></textarea>
+				</div>
+			</form>
+		</div>
+		<script>
+			function Converter()
+			{
+				const arq = document.getElementById("arquivo");
+				const resultado = document.getElementById("resBase64");
+				const leitor = new FileReader();
+				
+				leitor.readAsDataURL(arq.files[0]);
+				leitor.onload = () => {
+					resultado.value = leitor.result;
+					alert(leitor.result.split('').length);
+				}
+			}
+			function Copiar()
+			{
+				let base64 = document.getElementById("resBase64").value;
+				navigator.clipboard.writeText(base64);
+				document.getElementById("resBase64").value = '';
+			}
+		</script>
+	</body>
+</html>
